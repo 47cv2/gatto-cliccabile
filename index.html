@@ -3,57 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gatto Cliccabile</title>
+    <title>MiniApp Minecraft Server</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Stili generali */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
-        }
-
-        h1 {
+            background-color: #f4f4f9;
             color: #333;
-            margin-top: 20px;
+        }
+        header {
+            background-color: #1d3557;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background-color: #457b9d;
+            padding: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 20px;
+        }
+        h2 {
+            color: #1d3557;
         }
 
-        .cat-container {
-            margin-top: 30px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
+        /* Stili per la classifica server */
+        .server-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
-
-        .cat-container:hover {
-            transform: scale(1.1);
+        .server-card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-
-        .cat {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
+        .server-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         }
-
-        .message {
-            margin-top: 20px;
+        .server-card h3 {
             font-size: 1.5em;
-            color: #333;
-            display: none;
+            margin: 10px 0;
+        }
+        .server-card p {
+            font-size: 1.1em;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        /* Stili per il profilo utente */
+        .profile-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .profile-form button {
+            background-color: #1d3557;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .profile-form button:hover {
+            background-color: #457b9d;
+        }
+
+        /* Stili per caricare il server */
+        .upload-server-form input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .upload-server-form button {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-server-form button:hover {
+            background-color: #264653;
+        }
+
+        /* Media Queries per la responsività */
+        @media (max-width: 768px) {
+            .server-list {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Benvenuto nella miniapp del Gatto!</h1>
+<header>
+    <h1>Benvenuto nella MiniApp Minecraft</h1>
+</header>
 
-    <div class="cat-container" onclick="showMessage()">
-        <img src="https://placekitten.com/400/400" alt="Gatto Cliccabile" class="cat">
+<nav>
+    <a href="#classifica">Classifica Server</a>
+    <a href="#profilo">Profilo Utente</a>
+    <a href="#carica-server">Carica Server</a>
+</nav>
+
+<div class="container" id="classifica">
+    <h2>Classifica Top 10 Server di Minecraft</h2>
+    <div class="server-list">
+        <!-- Server 1 -->
+        <div class="server-card">
+            <img src="https://via.placeholder.com/100" alt="Logo Server 1">
+            <h3>Server Minecraft 1</h3>
+            <p>Modalità: Survival</p>
+            <p>Versione: 1.19.4</p>
+        </div>
+        <!-- Server 2 -->
+        <div class="server-card">
+            <img src="https://via.placeholder.com/100" alt="Logo Server 2">
+            <h3>Server Minecraft 2</h3>
+            <p>Modalità: Creative</p>
+            <p>Versione: 1.18.2</p>
+        </div>
+        <!-- Server 3 -->
+        <div class="server-card">
+            <img src="https://via.placeholder.com/100" alt="Logo Server 3">
+            <h3>Server Minecraft 3</h3>
+            <p>Modalità: Hardcore</p>
+            <p>Versione: 1.17.1</p>
+        </div>
+        <!-- More servers can be added similarly... -->
     </div>
+</div>
 
-    <div class="message" id="message">
-        😺 Hai cliccato sul gatto! 😺
-    </div>
+<div class="container" id="profilo">
+    <h2>Modifica Profilo Utente</h2>
+    <form class="profile-form">
+        <input type="text" placeholder="Nome utente" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Nuova password" required>
+        <button type="submit">Salva Modifiche</button>
+    </form>
+</div>
 
-    <script>
-        function showMessage() {
-          
+<div class="container" id="carica-server">
+    <h2>Carica il Tuo Server</h2>
+    <form class="upload-server-form">
+        <input type="file" name="server-file" accept=".zip,.tar,.rar" required>
+        <input type="text" placeholder="Nome del server" required>
+        <input type="text" placeholder="Modalità (es. Survival, Creative)" required>
+        <input type="text" placeholder="Versione Minecraft (es. 1.19.4)" required>
+        <button type="submit">Carica Server</button>
+    </form>
+</div>
+
+<script>
+    // Aggiungi eventuali script per il comportamento della pagina qui (ad esempio, per gestire il submit dei form, ecc.)
+    document.querySelector('.profile-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Profilo utente modificato!');
+    });
+
+    document.querySelector('.upload-server-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Server caricato con successo!');
+    });
+</script>
+
+</body>
+</html>
+
