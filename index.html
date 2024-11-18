@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatto Cliccabile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .cat-container {
+            margin-top: 30px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .cat-container:hover {
+            transform: scale(1.1);
+        }
+
+        .cat {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #333;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Benvenuto nella miniapp del Gatto!</h1>
+
+    <div class="cat-container" onclick="showMessage()">
+        <img src="https://placekitten.com/400/400" alt="Gatto Cliccabile" class="cat">
+    </div>
+
+    <div class="message" id="message">
+        😺 Hai cliccato sul gatto! 😺
+    </div>
+
+    <script>
+        function showMessage() {
+          
