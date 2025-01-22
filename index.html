@@ -3,197 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniApp Minecraft Server</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Space Miner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/6.7.0/telegram-web-app.js"></script>
     <style>
-        /* Stili generali */
-        body {
-            font-family: Arial, sans-serif;
+        /* Stili di base */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color: #1d3557;
-            color: #fff;
-            text-align: center;
-            padding: 1em 0;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            background-color: #457b9d;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            padding: 20px;
-        }
-        h2 {
-            color: #1d3557;
+            box-sizing: border-box;
+            user-select: none;
         }
 
-        /* Stili per la classifica server */
-        .server-list {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: #0f0f1f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .resources {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 10px;
+            margin: 20px 0;
         }
-        .server-card {
-            background-color: #fff;
+
+        .resource {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .planet {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 30%, #4a90e2, #2c3e50);
+            border-radius: 50%;
+            margin: 30px auto;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 0 30px rgba(74, 144, 226, 0.3);
+        }
+
+        .planet:active {
+            transform: scale(0.95);
+        }
+
+        .upgrades {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .upgrade-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .server-card img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .server-card h3 {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-        .server-card p {
-            font-size: 1.1em;
-            margin: 5px 0;
-            color: #666;
-        }
-
-        /* Stili per il profilo utente */
-        .profile-form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .profile-form button {
-            background-color: #1d3557;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-        }
-        .profile-form button:hover {
-            background-color: #457b9d;
+            transition: transform 0.2s, background 0.2s;
         }
 
-        /* Stili per caricare il server */
-        .upload-server-form input[type="file"] {
-            padding: 10px;
-            margin: 10px 0;
-        }
-        .upload-server-form button {
-            background-color: #2a9d8f;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .upload-server-form button:hover {
-            background-color: #264653;
+        .upgrade-btn:disabled {
+            background: #2c3e50;
+            cursor: not-allowed;
         }
 
-        /* Media Queries per la responsività */
-        @media (max-width: 768px) {
-            .server-list {
-                grid-template-columns: 1fr;
+        .upgrade-btn:active {
+            transform: scale(0.98);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .planet {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .resource-gain {
+            position: absolute;
+            animation: float-up 1s forwards;
+            pointer-events: none;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
             }
-            nav {
-                flex-direction: column;
-                align-items: center;
+            100% {
+                transform: translateY(-50px);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Benvenuto nella MiniApp Minecraft</h1>
-</header>
-
-<nav>
-    <a href="#classifica">Classifica Server</a>
-    <a href="#profilo">Profilo Utente</a>
-    <a href="#carica-server">Carica Server</a>
-</nav>
-
-<div class="container" id="classifica">
-    <h2>Classifica Top 10 Server di Minecraft</h2>
-    <div class="server-list">
-        <!-- Server 1 -->
-        <div class="server-card">
-            <img src="https://via.placeholder.com/100" alt="Logo Server 1">
-            <h3>Server Minecraft 1</h3>
-            <p>Modalità: Survival</p>
-            <p>Versione: 1.19.4</p>
+    <div class="container">
+        <h1>Space Miner</h1>
+        
+        <div class="resources">
+            <div class="resource">
+                <h3>Minerali</h3>
+                <p id="minerals">0</p>
+            </div>
+            <div class="resource">
+                <h3>Per Click</h3>
+                <p id="perClick">1</p>
+            </div>
         </div>
-        <!-- Server 2 -->
-        <div class="server-card">
-            <img src="https://via.placeholder.com/100" alt="Logo Server 2">
-            <h3>Server Minecraft 2</h3>
-            <p>Modalità: Creative</p>
-            <p>Versione: 1.18.2</p>
+
+        <div class="planet" id="planet"></div>
+
+        <div class="upgrades">
+            <button class="upgrade-btn" id="upgradeClick">
+                Migliora Click (Costa: <span id="upgradeClickCost">10</span>)
+            </button>
+            <button class="upgrade-btn" id="upgradeAuto">
+                Minatore Automatico (Costa: <span id="upgradeAutoCost">50</span>)
+            </button>
         </div>
-        <!-- Server 3 -->
-        <div class="server-card">
-            <img src="https://via.placeholder.com/100" alt="Logo Server 3">
-            <h3>Server Minecraft 3</h3>
-            <p>Modalità: Hardcore</p>
-            <p>Versione: 1.17.1</p>
-        </div>
-        <!-- More servers can be added similarly... -->
     </div>
-</div>
 
-<div class="container" id="profilo">
-    <h2>Modifica Profilo Utente</h2>
-    <form class="profile-form">
-        <input type="text" placeholder="Nome utente" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Nuova password" required>
-        <button type="submit">Salva Modifiche</button>
-    </form>
-</div>
+    <script>
+        let gameState = {
+            minerals: 0,
+            perClick: 1,
+            autoMiners: 0,
+            clickUpgradeCost: 10,
+            autoUpgradeCost: 50
+        };
 
-<div class="container" id="carica-server">
-    <h2>Carica il Tuo Server</h2>
-    <form class="upload-server-form">
-        <input type="file" name="server-file" accept=".zip,.tar,.rar" required>
-        <input type="text" placeholder="Nome del server" required>
-        <input type="text" placeholder="Modalità (es. Survival, Creative)" required>
-        <input type="text" placeholder="Versione Minecraft (es. 1.19.4)" required>
-        <button type="submit">Carica Server</button>
-    </form>
-</div>
+        function updateUI() {
+            document.getElementById('minerals').textContent = Math.floor(gameState.minerals);
+            document.getElementById('perClick').textContent = gameState.perClick;
+            document.getElementById('upgradeClickCost').textContent = gameState.clickUpgradeCost;
+            document.getElementById('upgradeAutoCost').textContent = gameState.autoUpgradeCost;
+            
+            document.getElementById('upgradeClick').disabled = gameState.minerals < gameState.clickUpgradeCost;
+            document.getElementById('upgradeAuto').disabled = gameState.minerals < gameState.autoUpgradeCost;
+        }
 
-<script>
-    // Aggiungi eventuali script per il comportamento della pagina qui (ad esempio, per gestire il submit dei form, ecc.)
-    document.querySelector('.profile-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('Profilo utente modificato!');
-    });
+        function createParticle(x, y, amount) {
+            const particle = document.createElement('div');
+            particle.className = 'resource-gain';
+            particle.textContent = `+${amount}`;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 1000);
+        }
 
-    document.querySelector('.upload-server-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('Server caricato con successo!');
-    });
-</script>
+        document.getElementById('planet').addEventListener('click', (e) => {
+            gameState.minerals += gameState.perClick;
+            createParticle(e.clientX, e.clientY, gameState.perClick);
+            updateUI();
 
+            // Animazione feedback tattile
+            if (window.Telegram.WebApp.initDataUnsafe.platform === 'ios' || 
+                window.Telegram.WebApp.initDataUnsafe.platform === 'android') {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+            }
+        });
+
+        document.getElementById('upgradeClick').addEventListener('click', () => {
+            if (gameState.minerals >= gameState.clickUpgradeCost) {
+                gameState.minerals -= gameState.clickUpgradeCost;
+                gameState.perClick *= 1.5;
+                gameState.clickUpgradeCost *= 1.8;
+                updateUI();
+            }
+        });
+
+        document.getElementById('upgradeAuto').addEventListener('click', () => {
+            if (gameState.minerals >= gameState.autoUpgradeCost) {
+                gameState.minerals -= gameState.autoUpgradeCost;
+                gameState.autoMiners++;
+                gameState.autoUpgradeCost *= 2;
+                updateUI();
+            }
+        });
+
+        // Sistema di mining automatico
+        setInterval(() => {
+            if (gameState.autoMiners > 0) {
+                gameState.minerals += gameState.autoMiners * 0.1;
+                updateUI();
+            }
+        }, 100);
+
+        // Salvataggio automatico
+        setInterval(() => {
+            localStorage.setItem('spaceMinerSave', JSON.stringify(gameState));
+        }, 5000);
+
+        // Carica il salvataggio
+        const savedGame = localStorage.getItem('spaceMinerSave');
+        if (savedGame) {
+            gameState = JSON.parse(savedGame);
+            updateUI();
+        }
+
+        // Inizializzazione Telegram MiniApp
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+    </script>
 </body>
 </html>
-
