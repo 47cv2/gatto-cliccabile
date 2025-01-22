@@ -6,183 +6,232 @@
     <title>Space Miner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/6.7.0/telegram-web-app.js"></script>
     <style>
-        /* Stili esistenti rimangono invariati */
-        /* ... */
-
-        /* Aggiungi questi nuovi stili per la navigazione */
-        .nav-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(15, 15, 31, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
+        /* Stili di base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
         }
 
-        .nav-item {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: #0f0f1f;
+            color: #fff;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #fff;
-            text-decoration: none;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
         }
 
-        .nav-item.active {
-            background: rgba(74, 144, 226, 0.2);
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .resource {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .planet {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 30%, #4a90e2, #2c3e50);
+            border-radius: 50%;
+            margin: 30px auto;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 0 30px rgba(74, 144, 226, 0.3);
+        }
+
+        .planet:active {
+            transform: scale(0.95);
+        }
+
+        .upgrades {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .upgrade-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .upgrade-btn:disabled {
+            background: #2c3e50;
+            cursor: not-allowed;
+        }
+
+        .upgrade-btn:active {
+            transform: scale(0.98);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .planet {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .resource-gain {
+            position: absolute;
+            animation: float-up 1s forwards;
+            pointer-events: none;
+            font-weight: bold;
             color: #4a90e2;
         }
 
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 4px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-        }
-
-        .screen {
-            display: none;
-            padding: 20px;
-            padding-bottom: 80px;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        /* Stili per le nuove schermate */
-        .friend-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .friend-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .achievement-list {
-            display: grid;
-            gap: 15px;
-        }
-
-        .achievement-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
+        @keyframes float-up {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Schermata Play (Principal) -->
-    <div class="screen active" id="playScreen">
-        <!-- Il contenuto esistente va qui -->
-        <div class="container">
-            <!-- ... contenuto esistente ... -->
-        </div>
-    </div>
-
-    <!-- Schermata Friends -->
-    <div class="screen" id="friendsScreen">
-        <div class="container">
-            <h2>Amici</h2>
-            <div class="friend-list">
-                <div class="friend-item">
-                    <span>Amico #1</span>
-                    <span>1,234 minerali</span>
-                </div>
-                <div class="friend-item">
-                    <span>Amico #2</span>
-                    <span>2,345 minerali</span>
-                </div>
+    <div class="container">
+        <h1>Space Miner</h1>
+        
+        <div class="resources">
+            <div class="resource">
+                <h3>Minerali</h3>
+                <p id="minerals">0</p>
+            </div>
+            <div class="resource">
+                <h3>Per Click</h3>
+                <p id="perClick">1</p>
             </div>
         </div>
-    </div>
 
-    <!-- Schermata Upgrades -->
-    <div class="screen" id="upgradesScreen">
-        <div class="container">
-            <h2>Potenziamenti</h2>
-            <div class="upgrades">
-                <!-- Gli upgrade esistenti verranno spostati qui -->
-            </div>
+        <div class="planet" id="planet"></div>
+
+        <div class="upgrades">
+            <button class="upgrade-btn" id="upgradeClick">
+                Migliora Click (Costa: <span id="upgradeClickCost">10</span>)
+            </button>
+            <button class="upgrade-btn" id="upgradeAuto">
+                Minatore Automatico (Costa: <span id="upgradeAutoCost">50</span>)
+            </button>
         </div>
     </div>
-
-    <!-- Schermata Achievements -->
-    <div class="screen" id="achievementsScreen">
-        <div class="container">
-            <h2>Achievements</h2>
-            <div class="achievement-list">
-                <div class="achievement-item">
-                    <h3>Primo Minatore!</h3>
-                    <p>Acquista il tuo primo minatore automatico</p>
-                </div>
-                <div class="achievement-item">
-                    <h3>Maestro dei Minerali</h3>
-                    <p>Accumula 1000 minerali in totale</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Footer -->
-    <nav class="nav-footer">
-        <a href="#" class="nav-item active" data-screen="playScreen">
-            <div class="nav-icon">🎮</div>
-            <div class="nav-label">Play</div>
-        </a>
-        <a href="#" class="nav-item" data-screen="friendsScreen">
-            <div class="nav-icon">👥</div>
-            <div class="nav-label">Friends</div>
-        </a>
-        <a href="#" class="nav-item" data-screen="upgradesScreen">
-            <div class="nav-icon">⚡</div>
-            <div class="nav-label">Upgrade</div>
-        </a>
-        <a href="#" class="nav-item" data-screen="achievementsScreen">
-            <div class="nav-icon">🏆</div>
-            <div class="nav-label">Achievement</div>
-        </a>
-    </nav>
 
     <script>
-        // Codice esistente rimane invariato
-        // ... 
+        let gameState = {
+            minerals: 0,
+            perClick: 1,
+            autoMiners: 0,
+            clickUpgradeCost: 10,
+            autoUpgradeCost: 50
+        };
 
-        // Aggiungi questo codice per la navigazione
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const screenId = item.dataset.screen;
-                switchScreen(screenId);
-            });
+        function updateUI() {
+            document.getElementById('minerals').textContent = Math.floor(gameState.minerals);
+            document.getElementById('perClick').textContent = gameState.perClick;
+            document.getElementById('upgradeClickCost').textContent = gameState.clickUpgradeCost;
+            document.getElementById('upgradeAutoCost').textContent = gameState.autoUpgradeCost;
+            
+            document.getElementById('upgradeClick').disabled = gameState.minerals < gameState.clickUpgradeCost;
+            document.getElementById('upgradeAuto').disabled = gameState.minerals < gameState.autoUpgradeCost;
+        }
+
+        function createParticle(x, y, amount) {
+            const particle = document.createElement('div');
+            particle.className = 'resource-gain';
+            particle.textContent = `+${amount}`;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+        document.getElementById('planet').addEventListener('click', (e) => {
+            gameState.minerals += gameState.perClick;
+            createParticle(e.clientX, e.clientY, gameState.perClick);
+            updateUI();
+
+            // Animazione feedback tattile
+            if (window.Telegram.WebApp.initDataUnsafe.platform === 'ios' || 
+                window.Telegram.WebApp.initDataUnsafe.platform === 'android') {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+            }
         });
 
-        function switchScreen(screenId) {
-            document.querySelector('.screen.active').classList.remove('active');
-            document.querySelector(`#${screenId}`).classList.add('active');
-            
-            document.querySelector('.nav-item.active').classList.remove('active');
-            document.querySelector(`[data-screen="${screenId}"]`).classList.add('active');
+        document.getElementById('upgradeClick').addEventListener('click', () => {
+            if (gameState.minerals >= gameState.clickUpgradeCost) {
+                gameState.minerals -= gameState.clickUpgradeCost;
+                gameState.perClick *= 1.5;
+                gameState.clickUpgradeCost *= 1.8;
+                updateUI();
+            }
+        });
+
+        document.getElementById('upgradeAuto').addEventListener('click', () => {
+            if (gameState.minerals >= gameState.autoUpgradeCost) {
+                gameState.minerals -= gameState.autoUpgradeCost;
+                gameState.autoMiners++;
+                gameState.autoUpgradeCost *= 2;
+                updateUI();
+            }
+        });
+
+        // Sistema di mining automatico
+        setInterval(() => {
+            if (gameState.autoMiners > 0) {
+                gameState.minerals += gameState.autoMiners * 0.1;
+                updateUI();
+            }
+        }, 100);
+
+        // Salvataggio automatico
+        setInterval(() => {
+            localStorage.setItem('spaceMinerSave', JSON.stringify(gameState));
+        }, 5000);
+
+        // Carica il salvataggio
+        const savedGame = localStorage.getItem('spaceMinerSave');
+        if (savedGame) {
+            gameState = JSON.parse(savedGame);
+            updateUI();
         }
+
+        // Inizializzazione Telegram MiniApp
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
     </script>
 </body>
 </html>
