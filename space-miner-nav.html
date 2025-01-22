@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Miner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/6.7.0/telegram-web-app.js"></script>
+    <style>
+        /* Stili esistenti rimangono invariati */
+        /* ... */
+
+        /* Aggiungi questi nuovi stili per la navigazione */
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 15, 31, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+        }
+
+        .screen {
+            display: none;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Stili per le nuove schermate */
+        .friend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .friend-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .achievement-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Schermata Play (Principal) -->
+    <div class="screen active" id="playScreen">
+        <!-- Il contenuto esistente va qui -->
+        <div class="container">
+            <!-- ... contenuto esistente ... -->
+        </div>
+    </div>
+
+    <!-- Schermata Friends -->
+    <div class="screen" id="friendsScreen">
+        <div class="container">
+            <h2>Amici</h2>
+            <div class="friend-list">
+                <div class="friend-item">
+                    <span>Amico #1</span>
+                    <span>1,234 minerali</span>
+                </div>
+                <div class="friend-item">
+                    <span>Amico #2</span>
+                    <span>2,345 minerali</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schermata Upgrades -->
+    <div class="screen" id="upgradesScreen">
+        <div class="container">
+            <h2>Potenziamenti</h2>
+            <div class="upgrades">
+                <!-- Gli upgrade esistenti verranno spostati qui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Schermata Achievements -->
+    <div class="screen" id="achievementsScreen">
+        <div class="container">
+            <h2>Achievements</h2>
+            <div class="achievement-list">
+                <div class="achievement-item">
+                    <h3>Primo Minatore!</h3>
+                    <p>Acquista il tuo primo minatore automatico</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>Maestro dei Minerali</h3>
+                    <p>Accumula 1000 minerali in totale</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <nav class="nav-footer">
+        <a href="#" class="nav-item active" data-screen="playScreen">
+            <div class="nav-icon">🎮</div>
+            <div class="nav-label">Play</div>
+        </a>
+        <a href="#" class="nav-item" data-screen="friendsScreen">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Friends</div>
+        </a>
+        <a href="#" class="nav-item" data-screen="upgradesScreen">
+            <div class="nav-icon">⚡</div>
+            <div class="nav-label">Upgrade</div>
+        </a>
+        <a href="#" class="nav-item" data-screen="achievementsScreen">
+            <div class="nav-icon">🏆</div>
+            <div class="nav-label">Achievement</div>
+        </a>
+    </nav>
+
+    <script>
+        // Codice esistente rimane invariato
+        // ... 
+
+        // Aggiungi questo codice per la navigazione
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const screenId = item.dataset.screen;
+                switchScreen(screenId);
+            });
+        });
+
+        function switchScreen(screenId) {
+            document.querySelector('.screen.active').classList.remove('active');
+            document.querySelector(`#${screenId}`).classList.add('active');
+            
+            document.querySelector('.nav-item.active').classList.remove('active');
+            document.querySelector(`[data-screen="${screenId}"]`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
