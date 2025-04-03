@@ -7,6 +7,12 @@ const GITHUB_CONFIG = {
     token: "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" // Imposta il token GitHub qui SOLO per uso privato o tramite variabile d'ambiente
 };
 
+// Configurazione Telegram
+const TELEGRAM_CONFIG = {
+    botToken: "7645980878:AAHgybK_gW-LcrnkAcfi4HotQhmspPJ9P5o", // Imposta il token del tuo bot qui o tramite variabile d'ambiente
+    chatId: "bonkry" // Il tuo ID chat di Telegram
+};
+
 // Dati delle richieste di iscrizione
 let iscrizioni = [];
 let statistiche = {
@@ -81,6 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
             statistiche.inAttesa++;
             statistiche.ultimoAggiornamento = new Date().toLocaleString();
             
+            // Invia notifica a Telegram
+            inviaNotificaTelegram(nuovaIscrizione);
+            
             // Salva le modifiche su GitHub e in localStorage
             salvaDatiSuGitHub();
             salvaInLocalStorage();
@@ -97,6 +106,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Funzione per inviare notifica a Telegram
+function inviaNotificaTelegram(iscrizione) {
+    // Verifica se siamo in un contesto di Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+        // Invio dei dati al bot tramite Telegram WebApp
+        window.Telegram.WebApp.sendData(JSON.stringify({
+            action: 'nuova_iscrizione',
+            dati: iscrizione
+        }));
+    } else {
+        // Invio diretto tramite API Telegram se non siamo in WebApp
+        if (TELEGRAM_CONFIG.botToken && TELEGRAM_CONFIG.chatId) {
+            // Preparazione messaggio
+            const messaggio = `🆕 NUOVA ISCRIZIONE PARTITO 🆕\n\n` +
+                `👤 Minecraft: ${iscrizione.minecraft}\n` +
+                `📱 Telegram: ${iscrizione.telegram}\n` +
+                `🔢 Età: ${iscrizione.eta}\n` +
+                `📝 Esperienze: ${iscrizione.esperienze || 'Nessuna'}\n` +
+                `📅 Data richiesta: ${iscrizione.dataRichiesta}`;
+            
+            // Codifica il messaggio per l'URL
+            const messaggioEncoded = encodeURIComponent(messaggio);
+            
+            // Invio tramite fetch
+            fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage?chat_id=${TELEGRAM_CONFIG.chatId}&text=${messaggioEncoded}&parse_mode=HTML`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Notifica Telegram inviata con successo:', data);
+                })
+                .catch(error => {
+                    console.error('Errore nell\'invio della notifica Telegram:', error);
+                });
+        } else {
+            console.warn('Configurazione Telegram mancante. La notifica non è stata inviata.');
+        }
+    }
+}
+
 // Funzione per salvare i dati nel localStorage
 function salvaInLocalStorage() {
     const datiCompleti = {
@@ -105,15 +152,6 @@ function salvaInLocalStorage() {
         configurazione: configurazione
     };
     localStorage.setItem('partito_dati', JSON.stringify(datiCompleti));
-    
-    // Se siamo in un contesto Telegram, possiamo utilizzare il Telegram WebApp API
-    if (window.Telegram && window.Telegram.WebApp) {
-        // Invio dei dati al bot tramite Telegram WebApp
-        window.Telegram.WebApp.sendData(JSON.stringify({
-            action: 'nuova_iscrizione',
-            dati: iscrizioni[iscrizioni.length - 1]
-        }));
-    }
 }
 
 // Funzione per caricare i dati dal localStorage
