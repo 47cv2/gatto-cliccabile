@@ -4,7 +4,7 @@ const GITHUB_CONFIG = {
     repo: "cr-webapp", // Nome del repository
     path: "iscrizioni.json", // Percorso del file nel repository
     branch: "main", // Nome del branch
-    token: "" // Imposta il token GitHub qui SOLO per uso privato o tramite variabile d'ambiente
+    token: "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" // Imposta il token GitHub qui SOLO per uso privato o tramite variabile d'ambiente
 };
 
 // Dati delle richieste di iscrizione
