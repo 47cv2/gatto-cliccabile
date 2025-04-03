@@ -3,235 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Miner</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/6.7.0/telegram-web-app.js"></script>
-    <style>
-        /* Stili di base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background: #0f0f1f;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .resources {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .resource {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 10px;
-            transition: transform 0.2s;
-        }
-
-        .planet {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at 30% 30%, #4a90e2, #2c3e50);
-            border-radius: 50%;
-            margin: 30px auto;
-            cursor: pointer;
-            transition: transform 0.1s;
-            box-shadow: 0 0 30px rgba(74, 144, 226, 0.3);
-        }
-
-        .planet:active {
-            transform: scale(0.95);
-        }
-
-        .upgrades {
-            display: grid;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .upgrade-btn {
-            background: #4a90e2;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-        }
-
-        .upgrade-btn:disabled {
-            background: #2c3e50;
-            cursor: not-allowed;
-        }
-
-        .upgrade-btn:active {
-            transform: scale(0.98);
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .planet {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .resource-gain {
-            position: absolute;
-            animation: float-up 1s forwards;
-            pointer-events: none;
-            font-weight: bold;
-            color: #4a90e2;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-        }
-    </style>
+    <title>Cambiamento Radicale</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Space Miner</h1>
-        
-        <div class="resources">
-            <div class="resource">
-                <h3>Minerali</h3>
-                <p id="minerals">0</p>
-            </div>
-            <div class="resource">
-                <h3>Per Click</h3>
-                <p id="perClick">1</p>
-            </div>
+    <header>
+        <div class="logo-container">
+            <img src="/api/placeholder/100/100" alt="Logo Cambiamento Radicale" class="logo">
+            <h1>Cambiamento Radicale</h1>
         </div>
+    </header>
 
-        <div class="planet" id="planet"></div>
-
-        <div class="upgrades">
-            <button class="upgrade-btn" id="upgradeClick">
-                Migliora Click (Costa: <span id="upgradeClickCost">10</span>)
-            </button>
-            <button class="upgrade-btn" id="upgradeAuto">
-                Minatore Automatico (Costa: <span id="upgradeAutoCost">50</span>)
-            </button>
-        </div>
-    </div>
-
-    <script>
-        let gameState = {
-            minerals: 0,
-            perClick: 1,
-            autoMiners: 0,
-            clickUpgradeCost: 10,
-            autoUpgradeCost: 50
-        };
-
-        function updateUI() {
-            document.getElementById('minerals').textContent = Math.floor(gameState.minerals);
-            document.getElementById('perClick').textContent = gameState.perClick;
-            document.getElementById('upgradeClickCost').textContent = gameState.clickUpgradeCost;
-            document.getElementById('upgradeAutoCost').textContent = gameState.autoUpgradeCost;
+    <main>
+        <!-- Sezione Home -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Benvenuto nel Partito Cambiamento Radicale</h2>
+                <p>Unisciti a noi per costruire insieme il futuro di Minecraft</p>
+                <button class="cta-button" onclick="showSection('iscrizione')">Unisciti a noi</button>
+            </div>
             
-            document.getElementById('upgradeClick').disabled = gameState.minerals < gameState.clickUpgradeCost;
-            document.getElementById('upgradeAuto').disabled = gameState.minerals < gameState.autoUpgradeCost;
-        }
+            <div class="info-cards">
+                <div class="card">
+                    <h3>La nostra missione</h3>
+                    <p>Promuovere un cambiamento radicale nel modo in cui il governo di Minecraft opera, portando trasparenza e innovazione.</p>
+                </div>
+                <div class="card">
+                    <h3>I nostri valori</h3>
+                    <p>Integrità, innovazione e inclusività sono alla base di ogni nostra proposta e decisione.</p>
+                </div>
+            </div>
+        </section>
 
-        function createParticle(x, y, amount) {
-            const particle = document.createElement('div');
-            particle.className = 'resource-gain';
-            particle.textContent = `+${amount}`;
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-            document.body.appendChild(particle);
+        <!-- Sezione Gerarchia -->
+        <section id="gerarchia" class="section">
+            <h2>Gerarchia del Partito</h2>
+            <div class="membri-container">
+                <!-- Esempi di membri -->
+                <div class="membro">
+                    <img src="/api/placeholder/80/80" alt="Skin Minecraft" class="minecraft-head">
+                    <h3>NomeMembro1</h3>
+                    <p>Presidente</p>
+                </div>
+                <div class="membro">
+                    <img src="/api/placeholder/80/80" alt="Skin Minecraft" class="minecraft-head">
+                    <h3>NomeMembro2</h3>
+                    <p>Vicepresidente</p>
+                </div>
+                <div class="membro">
+                    <img src="/api/placeholder/80/80" alt="Skin Minecraft" class="minecraft-head">
+                    <h3>NomeMembro3</h3>
+                    <p>Segretario</p>
+                </div>
+                <div class="membro">
+                    <img src="/api/placeholder/80/80" alt="Skin Minecraft" class="minecraft-head">
+                    <h3>NomeMembro4</h3>
+                    <p>Tesoriere</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Proposte -->
+        <section id="proposte" class="section">
+            <h2>Le nostre Proposte</h2>
             
-            setTimeout(() => particle.remove(), 1000);
-        }
+            <div class="categoria">
+                <h3>Economia</h3>
+                <ul class="proposte-list">
+                    <li>Creazione di un sistema di tassazione più equo</li>
+                    <li>Incentivi per i nuovi giocatori che vogliono avviare attività</li>
+                    <li>Regolamentazione del mercato degli oggetti rari</li>
+                </ul>
+            </div>
+            
+            <div class="categoria">
+                <h3>Infrastrutture</h3>
+                <ul class="proposte-list">
+                    <li>Miglioramento della rete di trasporti tra regioni</li>
+                    <li>Costruzione di nuovi edifici pubblici nelle aree sottosviluppate</li>
+                    <li>Implementazione di un sistema di illuminazione pubblica più efficiente</li>
+                </ul>
+            </div>
+            
+            <div class="categoria">
+                <h3>Ambiente</h3>
+                <ul class="proposte-list">
+                    <li>Protezione delle foreste e degli ecosistemi naturali</li>
+                    <li>Limiti all'estrazione di risorse in aree protette</li>
+                    <li>Incentivi per l'uso di materiali sostenibili nelle costruzioni</li>
+                </ul>
+            </div>
+        </section>
 
-        document.getElementById('planet').addEventListener('click', (e) => {
-            gameState.minerals += gameState.perClick;
-            createParticle(e.clientX, e.clientY, gameState.perClick);
-            updateUI();
+        <!-- Sezione Iscrizione -->
+        <section id="iscrizione" class="section">
+            <h2>Unisciti a Cambiamento Radicale</h2>
+            <form id="iscrizioneForm">
+                <div class="form-group">
+                    <label for="minecraft-nick">Nickname Minecraft:</label>
+                    <input type="text" id="minecraft-nick" name="minecraft-nick" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telegram">Username Telegram:</label>
+                    <input type="text" id="telegram" name="telegram" placeholder="@username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eta">Età:</label>
+                    <input type="number" id="eta" name="eta" min="13" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="esperienze">Esperienze lavorative/politiche:</label>
+                    <textarea id="esperienze" name="esperienze" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Invia Richiesta</button>
+            </form>
+        </section>
+    </main>
 
-            // Animazione feedback tattile
-            if (window.Telegram.WebApp.initDataUnsafe.platform === 'ios' || 
-                window.Telegram.WebApp.initDataUnsafe.platform === 'android') {
-                window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-            }
-        });
+    <footer>
+        <nav class="footer-nav">
+            <button class="nav-button" onclick="showSection('home')">Home</button>
+            <button class="nav-button" onclick="showSection('gerarchia')">Gerarchia</button>
+            <button class="nav-button" onclick="showSection('proposte')">Proposte</button>
+            <button class="nav-button" onclick="showSection('iscrizione')">Iscrizione</button>
+        </nav>
+    </footer>
 
-        document.getElementById('upgradeClick').addEventListener('click', () => {
-            if (gameState.minerals >= gameState.clickUpgradeCost) {
-                gameState.minerals -= gameState.clickUpgradeCost;
-                gameState.perClick *= 1.5;
-                gameState.clickUpgradeCost *= 1.8;
-                updateUI();
-            }
-        });
-
-        document.getElementById('upgradeAuto').addEventListener('click', () => {
-            if (gameState.minerals >= gameState.autoUpgradeCost) {
-                gameState.minerals -= gameState.autoUpgradeCost;
-                gameState.autoMiners++;
-                gameState.autoUpgradeCost *= 2;
-                updateUI();
-            }
-        });
-
-        // Sistema di mining automatico
-        setInterval(() => {
-            if (gameState.autoMiners > 0) {
-                gameState.minerals += gameState.autoMiners * 0.1;
-                updateUI();
-            }
-        }, 100);
-
-        // Salvataggio automatico
-        setInterval(() => {
-            localStorage.setItem('spaceMinerSave', JSON.stringify(gameState));
-        }, 5000);
-
-        // Carica il salvataggio
-        const savedGame = localStorage.getItem('spaceMinerSave');
-        if (savedGame) {
-            gameState = JSON.parse(savedGame);
-            updateUI();
-        }
-
-        // Inizializzazione Telegram MiniApp
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
