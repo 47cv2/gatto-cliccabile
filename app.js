@@ -48,7 +48,7 @@
              salvaIscrizioni();
              
              // Mostra messaggio di conferma
-             alert('Richiesta inviata con successo! Verrai contattato presto.');
+             alert('Grazie! Verrai contattato presto.');
              
              // Resetta il form
              form.reset();
