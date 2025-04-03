@@ -1,6 +1,6 @@
 // Configurazione GitHub
 const GITHUB_CONFIG = {
-    username: "47c2", // Inserisci il tuo username GitHub
+    username: "47cv2", // Inserisci il tuo username GitHub
     repo: "cr-webapp", // Nome del repository
     path: "iscrizioni.json", // Percorso del file nel repository
     branch: "main", // Nome del branch
