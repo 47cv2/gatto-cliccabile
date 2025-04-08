@@ -323,3 +323,69 @@ footer {
     margin-right: 8px;
 }
 }
+
+/* Stili da aggiungere in style.css per la sezione Classifica */
+
+/* Stile per la sezione classifica */
+.classifica-container {
+    overflow-x: auto;
+    margin-top: 2rem;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.classifica-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+.classifica-table th, 
+.classifica-table td {
+    padding: 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.classifica-table th {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.classifica-table tr:hover {
+    background-color: rgba(98, 0, 238, 0.05);
+}
+
+/* Stili per i primi tre posti */
+.primo-posto {
+    background-color: rgba(255, 215, 0, 0.2); /* Gold */
+    font-weight: bold;
+}
+
+.secondo-posto {
+    background-color: rgba(192, 192, 192, 0.2); /* Silver */
+    font-weight: bold;
+}
+
+.terzo-posto {
+    background-color: rgba(205, 127, 50, 0.2); /* Bronze */
+    font-weight: bold;
+}
+
+/* Responsive per mobile */
+@media (max-width: 768px) {
+    .classifica-table {
+        font-size: 0.9rem;
+    }
+    
+    .classifica-table th, 
+    .classifica-table td {
+        padding: 0.6rem;
+    }
+}
