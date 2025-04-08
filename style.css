@@ -183,7 +183,7 @@ main {
 }
 
 .proposte-list li:before {
-    content: "â€¢";
+    content: "●";
     color: var(--primary-color);
     font-weight: bold;
     display: inline-block;
