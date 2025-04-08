@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-            <h1>Cambiamento Radicale</h1>
+    <header class="full-width-header">
+        <h1>Cambiamento Radicale</h1>
     </header>
 
     <main>
         <!-- Sezione Home -->
         <section id="home" class="section active">
             <div class="hero">
-                <h2>Benvenuto nel Partito Cambiamento Radicale</h2>
+                <h2>Benvenuto <span id="telegram-name"></span> nel Partito Cambiamento Radicale</h2>
                 <p>Unisciti a noi per costruire insieme il futuro di Metropolis!</p>
                 <button class="cta-button" onclick="showSection('iscrizione')">Entra nel Partito!</button>
             </div>
@@ -61,17 +61,17 @@
                     <img src="https://minotar.net/helm/_Lucifer66/600.png" alt="Skin Minecraft" class="minecraft-head">
                     <h3>_Lucifer66</h3>
                     <p>Consigliere Superiore</p>
-                                    </div>
+                </div>
                 <div class="membro">
                     <img src="https://minotar.net/helm/Revlis1/600.png" alt="Skin Minecraft" class="minecraft-head">
                     <h3>Revlis1</h3>
                     <p>Segretario Generale</p>
-                                    </div>
+                </div>
                 <div class="membro">
                     <img src="https://minotar.net/helm/GioelePro/600.png" alt="Skin Minecraft" class="minecraft-head">
                     <h3>GioelePro</h3>
                     <p>Vice Segretario</p>
-                                    </div>
+                </div>
                 <div class="membro">
                     <img src="https://minotar.net/helm/Vespasianum/600.png" alt="Skin Minecraft" class="minecraft-head">
                     <h3>Vespasianum</h3>
@@ -143,50 +143,118 @@
                 </ul>
             </div>
         </section>
-<section id="bandi" class="section">
-    <h2>Partecipa ai Bandi</h2>
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (1) Bando
-        </a>
-    </div> 
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (2) Bando
-        </a>
-    </div>
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (3) Bando
-        </a>
-    </div>
-</section>
-       <!-- Sezione Iscrizione -->
-<section id="iscrizione" class="section">
-    <h2>Unisciti a Cambiamento Radicale</h2>
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            Unisciti al Cambiamento!
-        </a>
-    </div>
-</section>
 
-        
+        <!-- Sezione Classifiche (sostituisce la sezione Bandi) -->
+        <section id="classifiche" class="section">
+            <h2>Classifiche</h2>
+            <div class="leaderboard">
+                <div class="leaderboard-top">
+                    <!-- Secondo posto -->
+                    <div class="leaderboard-item top-three second-place">
+                        <div class="position">2</div>
+                        <div class="player-info">
+                            <h3>itzluciferr</h3>
+                            <p class="score">785</p>
+                        </div>
+                        <div class="medal silver"></div>
+                    </div>
+                    
+                    <!-- Primo posto -->
+                    <div class="leaderboard-item top-three first-place">
+                        <div class="position">1</div>
+                        <div class="player-info">
+                            <h3>_iTzLook_</h3>
+                            <p class="score">960</p>
+                        </div>
+                        <div class="medal gold"></div>
+                    </div>
+                    
+                    <!-- Terzo posto -->
+                    <div class="leaderboard-item top-three third-place">
+                        <div class="position">3</div>
+                        <div class="player-info">
+                            <h3>CurranXMatte</h3>
+                            <p class="score">720</p>
+                        </div>
+                        <div class="medal bronze"></div>
+                    </div>
+                </div>
+                
+                <!-- Resto della classifica -->
+                <div class="leaderboard-list">
+                    <div class="leaderboard-item">
+                        <div class="position">4</div>
+                        <div class="player-info">
+                            <h3>luigiluix</h3>
+                            <p class="score">650</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">5</div>
+                        <div class="player-info">
+                            <h3>_Lucifer66</h3>
+                            <p class="score">610</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">6</div>
+                        <div class="player-info">
+                            <h3>Revlis1</h3>
+                            <p class="score">580</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">7</div>
+                        <div class="player-info">
+                            <h3>GioelePro</h3>
+                            <p class="score">520</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">8</div>
+                        <div class="player-info">
+                            <h3>Vespasianum</h3>
+                            <p class="score">490</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">9</div>
+                        <div class="player-info">
+                            <h3>PlayerSample</h3>
+                            <p class="score">450</p>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="position">10</div>
+                        <div class="player-info">
+                            <h3>NewMember</h3>
+                            <p class="score">420</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Iscrizione -->
+        <section id="iscrizione" class="section">
+            <h2>Unisciti a Cambiamento Radicale</h2>
+            <div class="telegram-redirect">
+                <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
+                <a href="https://t.me/CREventi_bot" class="telegram-button">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
+                    Unisciti al Cambiamento!
+                </a>
+            </div>
+        </section>
+    </main>
+
     <footer>
         <nav class="footer-nav">
             <button class="nav-button" onclick="showSection('home')">Home</button>
             <button class="nav-button" onclick="showSection('gerarchia')">Gerarchia</button>
             <button class="nav-button" onclick="showSection('proposte')">Proposte</button>
             <button class="nav-button" onclick="showSection('iscrizione')">Iscrizione</button>
-            <button class="nav-button" onclick="showSection('bandi')">Bandi</button>
+            <button class="nav-button" onclick="showSection('classifiche')">Classifiche</button>
         </nav>
     </footer>
 
