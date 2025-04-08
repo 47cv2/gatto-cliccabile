@@ -143,28 +143,75 @@
                 </ul>
             </div>
         </section>
-<section id="bandi" class="section">
-    <h2>Partecipa ai Bandi</h2>
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (1) Bando
-        </a>
-    </div> 
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (2) Bando
-        </a>
-    </div>
-    <div class="telegram-redirect">
-        <p>Per iscriverti al partito Cambiamento Radicale, contattaci tramite il nostro bot Telegram.</p>
-        <a href="https://t.me/CREventi_bot" class="telegram-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Telegram_2019_Logo.svg" width="42" height="42" class="telegram-icon">
-            (3) Bando
-        </a>
+<!-- Modifica da fare in index.html -->
+<!-- Sostituire la sezione id="bandi" con questa nuova sezione -->
+
+<section id="classifica" class="section">
+    <h2>Classifica dei Membri</h2>
+    <div class="classifica-container">
+        <table class="classifica-table">
+            <thead>
+                <tr>
+                    <th>Posizione</th>
+                    <th>Nickname</th>
+                    <th>Punti</th>
+                    <th>Grado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Esempio di riga nella classifica (da modificare manualmente) -->
+                <tr class="primo-posto">
+                    <td>1</td>
+                    <td>_iTzLook_</td>
+                    <td>1000</td>
+                    <td>Presidente</td>
+                </tr>
+                <tr class="secondo-posto">
+                    <td>2</td>
+                    <td>itzluciferr</td>
+                    <td>950</td>
+                    <td>Vice Presidente</td>
+                </tr>
+                <tr class="terzo-posto">
+                    <td>3</td>
+                    <td>CurranXMatte</td>
+                    <td>900</td>
+                    <td>Consigliere Superiore</td>
+                </tr>
+                <!-- Altre righe da aggiungere manualmente -->
+                <tr>
+                    <td>4</td>
+                    <td>luigiluix</td>
+                    <td>850</td>
+                    <td>Consigliere Superiore</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>_Lucifer66</td>
+                    <td>800</td>
+                    <td>Consigliere Superiore</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Revlis1</td>
+                    <td>750</td>
+                    <td>Segretario Generale</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>GioelePro</td>
+                    <td>700</td>
+                    <td>Vice Segretario</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Vespasianum</td>
+                    <td>650</td>
+                    <td>Garante Statuto</td>
+                </tr>
+                <!-- Aggiungi altre righe secondo necessità -->
+            </tbody>
+        </table>
     </div>
 </section>
        <!-- Sezione Iscrizione -->
@@ -180,15 +227,15 @@
 </section>
 
         
-    <footer>
-        <nav class="footer-nav">
-            <button class="nav-button" onclick="showSection('home')">Home</button>
-            <button class="nav-button" onclick="showSection('gerarchia')">Gerarchia</button>
-            <button class="nav-button" onclick="showSection('proposte')">Proposte</button>
-            <button class="nav-button" onclick="showSection('iscrizione')">Iscrizione</button>
-            <button class="nav-button" onclick="showSection('bandi')">Bandi</button>
-        </nav>
-    </footer>
+<footer>
+    <nav class="footer-nav">
+        <button class="nav-button" onclick="showSection('home')">Home</button>
+        <button class="nav-button" onclick="showSection('gerarchia')">Gerarchia</button>
+        <button class="nav-button" onclick="showSection('proposte')">Proposte</button>
+        <button class="nav-button" onclick="showSection('iscrizione')">Iscrizione</button>
+        <button class="nav-button" onclick="showSection('classifica')">Classifica</button>
+    </nav>
+</footer>
 
     <script src="app.js"></script>
 </body>
